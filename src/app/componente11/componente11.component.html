@@ -1,0 +1,74 @@
+<div class="container">
+  <form [formGroup]="formulario">
+    <input type="text" formControlName="nome" placeholder="Nome" class="form-control">
+    <!-- Nome -->
+    @if (formulario.get('nome').hasError('required') && formulario.get('nome').touched) {
+        <div class="alert alert-danger">O campo nome é obrigatório</div>
+    }
+
+    @if (formulario.get('nome').hasError('minlength') && formulario.get('nome').touched) {
+      <div class="alert alert-danger">O campo nome precisa conter pelomenos 3 caracteres</div>
+    }
+
+    <input type="number" formControlName="idade" placeholder="Idade" class="form-control">
+    <!-- Idade -->
+    @if (formulario.get('idade').hasError('required') && formulario.get('idade').touched) {
+      <div class="alert alert-danger">O campo idade é obrigatório</div>
+  }
+
+  @if (formulario.get('idade').hasError('min') && formulario.get('idade').touched) {
+    <div class="alert alert-danger">O campo idade não não aceita números inferiores a 0</div>
+  }
+
+  @if (formulario.get('idade').hasError('max') && formulario.get('idade').touched) {
+    <div class="alert alert-danger">O campo idade não não aceita números superiores a 120</div>
+  }
+
+    <input type="text" formControlName="cidade" placeholder="Cidade" class="form-control">
+    <!-- Cidade -->
+    @if (formulario.get('cidade').hasError('required') && formulario.get('cidade').touched) {
+      <div class="alert alert-danger">O campo cidade é obrigatório</div>
+  }
+
+  @if (formulario.get('cidade').hasError('minlength') && formulario.get('cidade').touched) {
+    <div class="alert alert-danger">O campo cidade precisa conter pelomenos 3 caracteres</div>
+  }
+
+  @if (btnCadastrar) {
+    <input type="button" value="Cadastrar" (click)="cadastrar()" class="btn btn-success" [disabled]="formulario.invalid">
+  }@else {
+    <input type="button" value="Alterar" class="btn btn-primary" (click)="alterar()" [disabled]="formulario.invalid">
+    <input type="button" value="Remover" class="btn btn-danger" (click)="excluir()">
+    <input type="button" value="Cancelar" class="btn btn-dark" (click)="limpar()">
+  }
+
+
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Cidade</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let v of vector; index as indice" >
+          <td>{{indice+1}}</td>
+          <td>{{v.nome}}</td>
+          <td>{{v.idade}}</td>
+          <td>{{v.cidade}}</td>
+          <td>
+            <button class="btn btn-warning text-white" (click)="selecionar(indice)">Selecionar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
